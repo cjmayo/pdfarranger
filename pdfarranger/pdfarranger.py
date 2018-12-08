@@ -60,9 +60,7 @@ DOMAIN = 'pdfarranger'
 if os.name == 'nt':
     from ctypes import cdll
     libintl = cdll['libintl-8']
-    # FIXME: What happen if localedir contains non ASCII characters ? i.e. how
-    # does libintl and the Windows file system manage path charset.
-    libintl.bindtextdomain(DOMAIN.encode(), localedir.encode())
+    libintl.bindtextdomain(DOMAIN.encode(), localedir.encode(sys.getfilesystemencoding()))
     libintl.bind_textdomain_codeset(DOMAIN.encode(), 'UTF-8'.encode())
     del libintl
 else:
